@@ -1,3 +1,4 @@
 -r requirements.txt
+pytest==5.3.4
 pyspark==2.4.4
 livy==0.6.0

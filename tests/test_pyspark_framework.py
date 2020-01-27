@@ -1,9 +1,8 @@
 import os
 import sys
 import glob
-import mock
+import unittest.mock as mock
 import pytest
-import yaml
 from pyspark_framework.spark_run import main
 from pyspark_framework.spark_job import SparkContextManager
 from test_jobs.example_spark_job import ReportJob
