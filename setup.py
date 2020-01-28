@@ -12,4 +12,9 @@ setup(name='pyspark_framework',
       license='MIT',
       packages=['pyspark_framework'],
       install_requires=requirements,
-      zip_safe=False)
+      zip_safe=False,
+      entry_points={
+          "console_scripts": [
+              "spark-run = pyspark_framework.spark_run:main"
+          ]
+      })
