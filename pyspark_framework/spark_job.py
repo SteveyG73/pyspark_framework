@@ -1,7 +1,7 @@
-import os
 from abc import ABC, abstractmethod
 from pyspark import SparkConf
 from pyspark.sql import SparkSession
+from pyspark_framework import aws_support
 
 
 class SparkContextManager:
@@ -16,14 +16,16 @@ class SparkContextManager:
         self.conf.setAppName(self.app_name)
 
         if self.s3_support:
-            self.conf.set('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.3')
+            self.conf = aws_support.configure_aws_jars(self.conf)
 
-        spark_session = SparkSession.builder.config(conf=self.conf).getOrCreate()
+        spark_session = (SparkSession
+                         .builder
+                         .config(conf=self.conf)
+                         .getOrCreate())
 
         if self.s3_support:
-            spark_session._jsc.hadoopConfiguration().set('fs.s3a.access.key', os.environ.get('AWS_ACCESS_KEY_ID'))
-            spark_session._jsc.hadoopConfiguration().set('fs.s3a.secret.key', os.environ.get('AWS_SECRET_ACCESS_KEY'))
-            spark_session._jsc.hadoopConfiguration().set('fs.s3a.impl', 'org.apache.hadoop.fs.s3a.S3AFileSystem')
+            spark_session = (aws_support
+                             .configure_aws_credentials(spark_session))
 
         return spark_session
 

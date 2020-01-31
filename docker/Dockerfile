@@ -1,7 +1,5 @@
 FROM openjdk:8-alpine
 
-
-
 RUN echo "**** install bash ****" && \
     apk update && \
     apk add bash

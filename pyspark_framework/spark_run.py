@@ -2,7 +2,7 @@ import sys
 import importlib
 import argparse
 
-from .spark_job import SparkContextManager
+from pyspark_framework.spark_job import SparkContextManager
 
 
 def main():
@@ -16,9 +16,13 @@ def main():
 
 def get_args(args):
     argp = argparse.ArgumentParser(prog='Spark Job Runner')
-    argp.add_argument('job_class_name', help='Fully qualified job class e.g. package.module.ClassName')
-    argp.add_argument('--app-name', '-a', default='pyspark-job', help='Application name to send to Spark Session')
-    argp.add_argument('--s3', action='store_true', help='Specify local S3 support')
+    argp.add_argument('job_class_name',
+                      help='Fully qualified job class '
+                           'e.g. package.module.ClassName')
+    argp.add_argument('--app-name', '-a', default='pyspark-job',
+                      help='Application name to send to Spark Session')
+    argp.add_argument('--s3', action='store_true',
+                      help='Specify local S3 support')
     return argp.parse_known_args(args)
 
 

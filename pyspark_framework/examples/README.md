@@ -4,18 +4,24 @@ To run directly:
 
 ```bash
 python driver.py \
-       pyspark_framework.examples.example_job.EmarsysReportOpenedEmails \
-       --input pyspark_framework/examples/example_data/ \
-       --output=/tmp/spark/tests \
-       --base-date=2018-01-01
+       pyspark_framework.examples.example_job.FlightSummary \
+       --input pyspark_framework/examples/example_data/flight-data/csv \
+       --output=/tmp/spark/tests
 ```
 
 ...or if you want to run it via the installed module:
 
 ```bash
 python -m pyspark_framework.spark_run \
-          pyspark_framework.examples.example_job.EmarsysReportOpenedEmails \
-          --input pyspark_framework/examples/example_data/ \
-          --output=/tmp/spark/tests \
-          --base-date=2018-01-01 
+          pyspark_framework.examples.example_job.FlightSummary \
+          --input pyspark_framework/examples/example_data/flight-data/csv \
+          --output=/tmp/spark/tests
+```
+
+...or if you prefer you can use the console script:
+
+```bash
+spark-run pyspark_framework.examples.example_job.FlightSummary \
+          --input pyspark_framework/examples/example_data/flight-data/csv \
+          --output=/tmp/spark/tests          
 ```

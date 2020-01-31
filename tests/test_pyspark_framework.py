@@ -77,7 +77,7 @@ def test_create_spark_session_no_s3():
     """
     with pytest.raises(Exception) as exc:
         with SparkContextManager('test') as no_s3:
-            no_s3.read.parquet('s3a://wr-datalake-staging/spark_test/some_data')
+            no_s3.read.parquet('s3a://apache-zeppelin/tutorial/bank/bank.csv')
     assert 'Class org.apache.hadoop.fs.s3a.S3AFileSystem not found' in str(exc.value)
 
 
