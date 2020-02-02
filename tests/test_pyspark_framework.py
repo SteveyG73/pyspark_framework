@@ -6,34 +6,6 @@ import pytest
 from pyspark_framework.spark_run import main
 from pyspark_framework.spark_job import SparkContextManager
 from test_jobs.example_spark_job import ReportJob
-from pyspark import SparkConf
-from pyspark.sql import SparkSession
-
-
-@pytest.fixture(scope='session')
-def spark_session():
-    """
-    Create a spark session to be used in testing jobs locally
-    :return spark_session: SparkSession
-    """
-
-    app_name = 'Local Spark test harness'
-    conf = SparkConf()
-    s3_support = False
-
-    conf.setAppName(app_name)
-
-    if s3_support:
-        conf.set('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.3')
-
-    spark_session = SparkSession.builder.config(conf=conf).getOrCreate()
-
-    if s3_support:
-        spark_session._jsc.hadoopConfiguration().set('fs.s3a.access.key', os.environ.get('AWS_ACCESS_KEY_ID'))
-        spark_session._jsc.hadoopConfiguration().set('fs.s3a.secret.key', os.environ.get('AWS_SECRET_ACCESS_KEY'))
-        spark_session._jsc.hadoopConfiguration().set('fs.s3a.impl', 'org.apache.hadoop.fs.s3a.S3AFileSystem')
-
-    return spark_session
 
 
 def test_runner():
@@ -78,7 +50,8 @@ def test_create_spark_session_no_s3():
     with pytest.raises(Exception) as exc:
         with SparkContextManager('test') as no_s3:
             no_s3.read.parquet('s3a://apache-zeppelin/tutorial/bank/bank.csv')
-    assert 'Class org.apache.hadoop.fs.s3a.S3AFileSystem not found' in str(exc.value)
+    assert 'Class org.apache.hadoop.fs.s3a.S3AFileSystem not found' in str(
+        exc.value)
 
 
 def test_livy_integration():
