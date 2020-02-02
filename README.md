@@ -32,9 +32,9 @@ class MySparkJob(SparkJob):
 
   def execute(self):
       '''
-      This implements an abstract method
+      This implements an abstract method from the base class SparkJob
       '''
-     data = self.spark.read.json("my/stuff")
+      data = self.spark.read.json("my/stuff")
 
 ```
 
@@ -54,3 +54,5 @@ Example:
         argp.add_argument('--output', required=False)
         return vars(argp.parse_args(arg_list))
 ```
+
+A complete example can be found [here](https://github.com/SteveyG73/pyspark_framework/tree/master/pyspark_framework/examples).
