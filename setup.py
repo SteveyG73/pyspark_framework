@@ -15,6 +15,6 @@ setup(name='pyspark_framework',
       zip_safe=False,
       entry_points={
           "console_scripts": [
-              "spark-run = pyspark_framework.spark_run:main"
-          ]
-      })
+              "spark-run=pyspark_framework.spark_run:main"
+          ]}
+      )

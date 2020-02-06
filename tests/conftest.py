@@ -1,3 +1,4 @@
+import os
 import pytest
 
 from pyspark import SparkConf
@@ -5,7 +6,7 @@ from pyspark.sql import SparkSession
 
 
 @pytest.fixture(scope='session')
-def spark_session():
+def spark_session(request):
     """
     Create a spark session to be used in testing jobs locally
     :return spark_session: SparkSession
@@ -28,8 +29,14 @@ def spark_session():
                                                          'AWS_ACCESS_KEY_ID'))
         spark_session._jsc.hadoopConfiguration().set('fs.s3a.secret.key',
                                                      os.environ.get(
-                                                         'AWS_SECRET_ACCESS_KEY'))
+                                                         'AWS_SECRET_ACCESS_KEY'
+                                                     ))
         spark_session._jsc.hadoopConfiguration().set('fs.s3a.impl',
-                                                     'org.apache.hadoop.fs.s3a.S3AFileSystem')
+                                                     'org.apache.hadoop.fs.'
+                                                     's3a.S3AFileSystem')
 
+    def close_session():
+        spark_session.stop()
+
+    request.addfinalizer(close_session)
     return spark_session
