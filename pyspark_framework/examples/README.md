@@ -13,7 +13,7 @@ python driver.py \
 
 ```bash
 python -m pyspark_framework.spark_run \
-          pyspark_framework.examples.example_job.FlightSummary \
+          --class pyspark_framework.examples.example_job.FlightSummary \
           --input pyspark_framework/examples/example_data/flight-data/csv \
           --output=/tmp/spark/tests
 ```
@@ -21,7 +21,7 @@ python -m pyspark_framework.spark_run \
 ...or if you prefer you can use the console script:
 
 ```bash
-spark-run pyspark_framework.examples.example_job.FlightSummary \
+spark-run --class pyspark_framework.examples.example_job.FlightSummary \
           --input pyspark_framework/examples/example_data/flight-data/csv \
           --output=/tmp/spark/tests          
 ```
