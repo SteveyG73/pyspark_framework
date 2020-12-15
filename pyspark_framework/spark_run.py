@@ -10,6 +10,7 @@ This module provides an easy method of running a Spark job by just supplying
 the module and class reference. The arguments are derived from sys.argv.
 """
 
+
 def main():
     """
     Main entry point for running a Spark job
@@ -36,9 +37,11 @@ def get_args(args):
     """
 
     argp = argparse.ArgumentParser(prog='Spark Job Runner')
-    argp.add_argument('job_class_name',
+    argp.add_argument('--class',
                       help='Fully qualified job class '
-                           'e.g. package.module.ClassName')
+                           'e.g. package.module.ClassName',
+                      dest="job_class_name",
+                      required=True)
     argp.add_argument('--app-name', '-a', default='pyspark-job',
                       help='Application name to send to Spark Session')
     argp.add_argument('--s3', action='store_true',
