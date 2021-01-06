@@ -23,7 +23,7 @@ def main():
 
     with SparkContextManager(job_args.app_name, job_args.s3) as spark:
         job = job_class_ref(spark, app_args)
-        sys.exit(job.execute())
+        job.execute()
 
 
 def get_args(args):
@@ -37,7 +37,7 @@ def get_args(args):
     """
 
     argp = argparse.ArgumentParser(prog='Spark Job Runner')
-    argp.add_argument('--class',
+    argp.add_argument('--job',
                       help='Fully qualified job class '
                            'e.g. package.module.ClassName',
                       dest="job_class_name",
@@ -46,6 +46,10 @@ def get_args(args):
                       help='Application name to send to Spark Session')
     argp.add_argument('--s3', action='store_true',
                       help='Specify local S3 support')
+    argp.add_argument('--jars',
+                      nargs="+",
+                      default=list(),
+                      help='Space-separated list of additional jars to load')
     return argp.parse_known_args(args)
 
 
