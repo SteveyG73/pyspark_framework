@@ -19,10 +19,11 @@ class SparkContextManager:
     up the SparkSession upon exit automatically.
     """
 
-    def __init__(self, app_name, s3_support=False):
+    def __init__(self, app_name: str, s3_support: bool = False, jars: list = None):
         self.app_name = app_name
         self.conf = SparkConf()
         self.s3_support = s3_support
+        self.jars = jars or list()
         self.spark = self._create_spark_session()
 
     def _create_spark_session(self):
@@ -32,7 +33,8 @@ class SparkContextManager:
         :return: A SparkSession instance
         """
         self.conf.setAppName(self.app_name)
-
+        jar_list = ",".join(self.jars)
+        self.conf.set("spark.jars", jar_list)
         if self.s3_support:
             self.conf = aws_support.configure_aws_jars(self.conf)
 
